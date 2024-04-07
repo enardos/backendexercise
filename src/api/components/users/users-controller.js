@@ -131,7 +131,7 @@ async function patchUser(request, response, next){
     const newpassword = request.body.newpassword;
     const confirmnewpassword = request.body.confirmnewpassword;
 
-    const check = await usersService.checkLoginCredentials(id, password);
+    const check = await usersService.checkLoginCredential(id, password);
     if(check){
       throw errorResponder(
         errorTypes.INVALID_PASSWORD,

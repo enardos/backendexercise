@@ -1,5 +1,6 @@
 const usersRepository = require('./users-repository');
 const { hashPassword } = require('../../../utils/password');
+const { passwordMatched } = require('../../../utils/password');
 
 /**
  * Get list of users
@@ -66,11 +67,9 @@ async function checkUserEmail(email){
     return emailExists;
 }
 
-async function checkLoginCredentials(id, password) {
+async function checkLoginCredential(id, password) {
   const user = await usersRepository.getUser(id);
-
   const passwordChecked = await passwordMatched(password, user.password);
-
   return passwordChecked;
 }
 /**
@@ -126,5 +125,5 @@ module.exports = {
   updateUser,
   deleteUser,
   checkUserEmail,
-  checkLoginCredentials
+  checkLoginCredential
 };
