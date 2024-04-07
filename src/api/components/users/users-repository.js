@@ -35,7 +35,7 @@ async function createUser(name, email, password) {
 
 async function checkUserByEmail(email){
   const existingUser = await User.findOne({email});
-  return !!existingUser;
+  return existingUser;
 }
 
 /**

@@ -64,7 +64,7 @@ async function createUser(name, email, password) {
 
 async function checkUserEmail(email){
   const emailExists = await usersRepository.checkUserByEmail(email);
-    return emailExists;
+    return !!emailExists;
 }
 
 async function checkLoginCredential(id, password) {
