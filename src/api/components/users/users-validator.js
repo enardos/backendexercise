@@ -16,4 +16,12 @@ module.exports = {
       email: joi.string().email().required().label('Email'),
     },
   },
+
+  patchUser: {
+    body: {
+      oldpassword: joi.string().min(6).max(32).required().label('Old Password'),
+      newpassword: joi.string().min(6).max(32).required().label('New Password'),
+      confirmnewpassword: joi.string().min(6).max(32).required().label('Confirm New Password')
+    }
+  }
 };

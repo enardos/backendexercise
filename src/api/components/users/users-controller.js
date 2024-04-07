@@ -124,6 +124,33 @@ async function updateUser(request, response, next) {
   }
 }
 
+async function patchUser(request, response, next){
+  try {
+    const id = request.params.id;
+    const password = request.body.password;
+    const newpassword = request.body.newpassword;
+    const confirmnewpassword = request.body.confirmnewpassword;
+
+    const check = await usersService.checkLoginCredentials(id, password);
+    if(check){
+      throw errorResponder(
+        errorTypes.INVALID_PASSWORD,
+        'Wrong password!'
+      )
+    }
+
+    if(newpassword !== confirmnewpassword){
+      throw errorResponder(
+        errorTypes.INVALID_PASSWORD,
+        'Your new password doesnt match the confirm new password!'
+      )
+    }
+    return response.status(200).json({ id });
+  } catch (error) {
+    return next(error);
+  }
+}
+
 /**
  * Handle delete user request
  * @param {object} request - Express request object
@@ -155,4 +182,5 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  patchUser,
 };

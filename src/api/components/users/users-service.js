@@ -65,6 +65,14 @@ async function checkUserEmail(email){
   const emailExists = await usersRepository.checkUserByEmail(email);
     return emailExists;
 }
+
+async function checkLoginCredentials(id, password) {
+  const user = await usersRepository.getUser(id);
+
+  const passwordChecked = await passwordMatched(password, user.password);
+
+  return passwordChecked;
+}
 /**
  * Update existing user
  * @param {string} id - User ID
@@ -118,4 +126,5 @@ module.exports = {
   updateUser,
   deleteUser,
   checkUserEmail,
+  checkLoginCredentials
 };
