@@ -59,6 +59,19 @@ async function updateUser(id, name, email) {
   );
 }
 
+async function patchUser(id, hashedPassword) {
+  return User.updateOne(
+    {
+      _id: id,
+    },
+    {
+      $set: {
+        password: hashedPassword,
+      },
+    }
+  );
+}
+
 /**
  * Delete a user
  * @param {string} id - User ID
@@ -75,4 +88,5 @@ module.exports = {
   updateUser,
   deleteUser,
   checkUserByEmail,
+  patchUser,
 };

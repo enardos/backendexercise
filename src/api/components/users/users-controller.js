@@ -127,11 +127,11 @@ async function updateUser(request, response, next) {
 async function patchUser(request, response, next){
   try {
     const id = request.params.id;
-    const password = request.body.password;
+    const oldpassword = request.body.oldpassword;
     const newpassword = request.body.newpassword;
     const confirmnewpassword = request.body.confirmnewpassword;
 
-    const check = await usersService.checkLoginCredential(id, password);
+    const check = await usersService.checkLoginCredential(id, oldpassword);
     if(check){
       throw errorResponder(
         errorTypes.INVALID_PASSWORD,
@@ -143,6 +143,14 @@ async function patchUser(request, response, next){
       throw errorResponder(
         errorTypes.INVALID_PASSWORD,
         'Your new password doesnt match the confirm new password!'
+      )
+    }
+
+    const checking = await usersService.patchUser(id, oldpassword, confirmnewpassword);
+    if(!checking){
+      throw errorResponder(
+        errorTypes.INVALID_CREDENTIALS,
+        'Fail to patch user'
       )
     }
     return response.status(200).json({ id });

@@ -70,7 +70,7 @@ async function checkUserEmail(email){
 async function checkLoginCredential(id, password) {
   const user = await usersRepository.getUser(id);
   const passwordChecked = await passwordMatched(password, user.password);
-  return passwordChecked;
+  return !passwordChecked;
 }
 /**
  * Update existing user
@@ -118,6 +118,16 @@ async function deleteUser(id) {
   return true;
 }
 
+async function patchUser(id, password, newpassword){
+  const hashedPassword = await hashPassword(newpassword);
+  try {
+    await usersRepository.patchUser(id, hashedPassword);
+  } catch (err) {
+    return null;
+  }
+  return true;
+}
+
 module.exports = {
   getUsers,
   getUser,
@@ -125,5 +135,6 @@ module.exports = {
   updateUser,
   deleteUser,
   checkUserEmail,
-  checkLoginCredential
+  checkLoginCredential,
+  patchUser
 };
