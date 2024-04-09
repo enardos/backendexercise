@@ -93,6 +93,7 @@ async function updateUser(request, response, next) {
     const id = request.params.id;
     const name = request.body.name;
     const email = request.body.email;
+    const password = request.body.password;
     const confirmpassword = request.body.confirmpassword;
 
     if(confirmpassword !== password){
