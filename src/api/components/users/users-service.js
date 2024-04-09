@@ -118,7 +118,7 @@ async function deleteUser(id) {
   return true;
 }
 
-async function patchUser(id, password, newpassword){
+async function patchUser(id, password, newpassword) {
   const hashedPassword = await hashPassword(newpassword);
   try {
     await usersRepository.patchUser(id, hashedPassword);
