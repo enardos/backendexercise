@@ -147,6 +147,14 @@ async function patchUser(request, response, next){
       )
     }
 
+    // Saya commit dan push sekali lagi karena lebih masuk akal juga apabila password yang lama seharusnya tidak boleh sama dengan password yang baru
+    if(oldpassword === newpassword){
+      throw errorResponder(
+        errorTypes.UNPROCESSABLE_ENTITY,
+        'Your new password cant be the same as the old one!'
+      )
+    }
+
     const checking = await usersService.patchUser(id, oldpassword, confirmnewpassword);
     if(!checking){
       throw errorResponder(
